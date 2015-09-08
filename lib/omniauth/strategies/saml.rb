@@ -39,12 +39,7 @@ module OmniAuth
           raise OmniAuth::Strategies::SAML::ValidationError.new("SAML response missing 'name_id'")
         end
 
-        response.validate!
-
         super
-      rescue OmniAuth::Strategies::SAML::ValidationError, OneLogin::RubySaml::ValidationError => e
-        Airbrake.notify_or_raise e, parameters: {document: response.document, options: options}, slack: true
-        fail!(:invalid_ticket, e)
       end
 
       def other_phase
