@@ -69,7 +69,7 @@ module OmniAuth
       end
 
       def other_phase
-        if current_path.start_with?(request_path)
+        if current_path.match(/#{Regexp.quote(request_path)}[\/\z]{1}/)
           @env['omniauth.strategy'] ||= self
           setup_phase
 
